@@ -29,3 +29,11 @@ func TestK(t *testing.T) {
 		t.Errorf("K value %g should be %g", k, math.Sqrt(3))
 	}
 }
+func TestClose(t *testing.T) {
+	if close(10, 10*(1+2*eps)) {
+		t.Errorf("Failed close test 1")
+	}
+	if !close(10, 10*(1+eps/2)) {
+		t.Errorf("Failed close test 2")
+	}
+}

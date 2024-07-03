@@ -4,7 +4,6 @@ package sr
 import (
 	"fmt"
 	"math"
-	"testing"
 )
 
 // The speed of light in metres per second
@@ -41,13 +40,4 @@ func K(v float64) (k float64) {
 	beta := Beta(v)
 	k = math.Sqrt((1 + beta) / (1 - beta))
 	return k
-}
-
-func TestClose(t *testing.T) {
-	if close(0, 2*eps) {
-		t.Errorf("Failed close test 1")
-	}
-	if !close(0, eps/2) {
-		t.Errorf("Failed close test 2")
-	}
 }
