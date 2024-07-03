@@ -4,6 +4,7 @@ package sr
 import (
 	"fmt"
 	"math"
+	"testing"
 )
 
 // The speed of light in metres per second
@@ -14,16 +15,18 @@ var Debug = false
 // Given a speed in metres per second, return the beta value (speed
 // divided by speed of light) corresponding to it.
 func Beta(v float64) (beta float64) {
-
+	beta = v / C
+	if Debug {
+		fmt.Printf("Beta = %g\n", beta)
+	}
+	// Check |beta| <= 1 ?
+	return beta
 }
 
 // Given a speed in metres per second, return the corresponding gamma
 // value, sqrt(1/(1-(v/c)^2)).
 func Gamma(v float64) (g float64) {
-	beta := v / C
-	if Debug {
-		fmt.Printf("Beta = %g\n", beta)
-	}
+	beta := Beta(v)
 	g = math.Sqrt(1 / (1 - beta*beta))
 	if Debug {
 		fmt.Printf("Gamma = %g\n", g)
@@ -35,5 +38,16 @@ func Gamma(v float64) (g float64) {
 // factor. Negative velocities are approaching, and positive
 // velocities are receding.
 func K(v float64) (k float64) {
+	beta := Beta(v)
+	k = math.Sqrt((1 + beta) / (1 - beta))
+	return k
+}
 
+func TestClose(t *testing.T) {
+	if close(0, 2*eps) {
+		t.Errorf("Failed close test 1")
+	}
+	if !close(0, eps/2) {
+		t.Errorf("Failed close test 2")
+	}
 }
