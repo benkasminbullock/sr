@@ -41,3 +41,10 @@ func K(v float64) (k float64) {
 	k = math.Sqrt((1 + beta) / (1 - beta))
 	return k
 }
+
+// Given a K value, return the corresponding velocity
+func KToV(k float64) (v float64) {
+	k2 := k * k
+	v = (k2 - 1) / (k2 + 1)
+	return v
+}
